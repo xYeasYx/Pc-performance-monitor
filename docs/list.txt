@@ -1,0 +1,15 @@
+Create the project folder  x
+Open it in VS Code  x
+Create a virtual environment  x
+Activate the environment  x
+Initialize Git x
+Create your basic folder/file structure
+Create .gitignore
+Create README.md and planning docs
+Install only the packages you need
+Save dependencies
+Write a minimal working version
+Commit
+Create/connect GitHub repository
+Push
+Develop feature-by-feature with commits
