@@ -1,57 +1,96 @@
-import time
-import psutil
+import sys
+
+from PySide6.QtWidgets import QApplication
+
+from gui import DashboardWindow
+from monitor import SystemMonitor
 
 
-def get_network_speed(previous_network_data, preTime):
-    currNetData = psutil.net_io_counters()
-    currTime = time.perf_counter()
+def main() -> int:
+    application = QApplication(sys.argv)
+    application.setStyleSheet(
+        """
+        QMainWindow, QWidget {
+            background-color: #12161d;
+            color: #e8edf2;
+            font-family: Segoe UI;
+        }
+        QLabel#windowTitle {
+            color: #f4f7fa;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        QLabel#subtitle, QLabel#status, QLabel#hotkey {
+            color: #8794a3;
+            font-size: 13px;
+        }
+        QLabel#status {
+            color: #66d9a5;
+        }
+        QWidget#metricCard {
+            background-color: #1a212b;
+            border: 1px solid #293442;
+            border-radius: 10px;
+        }
+        QWidget#metricCard QLabel {
+            border: none;
+            color: #f4f7fa;
+        }
+        QLabel#metricTitle {
+            color: #aeb9c5;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        QLabel#metricValue {
+            color: #f4f7fa;
+            font-size: 30px;
+            font-weight: 700;
+        }
+        QLabel#metricUnit {
+            color: #8794a3;
+            font-size: 12px;
+        }
+        QLabel {
+            background: transparent;
+        }
+        QCheckBox {
+            color: #aeb9c5;
+            font-size: 12px;
+        }
+        QCheckBox::indicator {
+            width: 15px;
+            height: 15px;
+        }
+        QCheckBox::indicator:unchecked {
+            border: 1px solid #526070;
+            border-radius: 4px;
+            background: #1a212b;
+        }
+        QCheckBox::indicator:checked {
+            border: 1px solid #5dd39e;
+            border-radius: 4px;
+            background: #5dd39e;
+        }
+        QPushButton {
+            background-color: #5dd39e;
+            color: #0f1916;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 18px;
+            font-weight: 700;
+        }
+        QPushButton:hover {
+            background-color: #f59e42;
+        }
+        """
+    )
 
-    elapsedTime = currTime - preTime
-
-    dlBytes = currNetData.bytes_recv - previous_network_data.bytes_recv         #compares the current bytes received to the previous
-    ulBytes = currNetData.bytes_sent - previous_network_data.bytes_sent         #compares the current bytes sent to the previous
-
-    
-
-    download_mbps = dlBytes * 8 / 1_000_000 / elapsedTime            #calc the  current download and uplad speeds in mbps
-    upload_mbps  = ulBytes * 8 / 1_000_000 / elapsedTime
-
-    return currNetData,currTime,  download_mbps, upload_mbps 
-
-
-def main():
-
-    previous_network_data = psutil.net_io_counters()
-    previous_time = time.perf_counter()
-
-    while True:
-
-        cpu_usage_percent = psutil.cpu_percent(interval=None)
-
-        memory_data = psutil.virtual_memory()
-        ram_usage_percent = memory_data.percent
-
-        (
-            currNetData,
-            currTime,
-            download_speed_mbps,
-            upload_speed_mbps
-        ) = get_network_speed(
-            previous_network_data,
-            previous_time
-        )
-
-        previous_network_data = currNetData
-        previous_time = currTime
-
-        print(
-            f"CPU: {cpu_usage_percent:.1f}% | "
-            f"RAM: {ram_usage_percent:.1f}% | "
-            f"Download: {download_speed_mbps:.2f} Mbps | "
-            f"Upload: {upload_speed_mbps:.2f} Mbps"
-        )
-
-        time.sleep(1)
+    monitor = SystemMonitor()
+    window = DashboardWindow(monitor)
+    window.show()
+    return application.exec()
 
 
 if __name__ == "__main__":

@@ -1,26 +1,28 @@
 # PC Performance Monitor
 
-A Python project for monitoring PC performance statistics such as CPU usage, RAM usage, temperatures, and other system information.
+A lightweight Windows desktop monitor for CPU, RAM, download, and upload usage.
+The interface uses PySide6 and refreshes once per second with a Qt timer.
 
-## Current Goal
+## Run
 
-Build a basic terminal-based performance monitor before adding a GUI.
+Activate the virtual environment, install dependencies, and start the app:
 
-## Planned Features
+```powershell
+pip install -r requirements.txt
+python main.py
+```
 
-* CPU usage monitoring
-* RAM usage monitoring
-* CPU temperature monitoring
-* GPU usage monitoring
-* GPU temperature monitoring
-* Performance alerts
-* GUI
-* Performance history
+## Project Structure
 
-## Technologies
+* `monitor.py` collects system metrics and owns network timing state.
+* `gui.py` contains the dashboard, metric cards, timer, and the always-on-top overlay.
+* `main.py` creates the Qt application and connects the monitor to the dashboard.
 
-* Python
+The overlay preview opens as a frameless tool window that stays above other
+applications. Hotkey, transparency, and click-through behavior can be added to
+`OverlayWindow` without coupling those details to the dashboard.
 
-## Status
+## Dependencies
 
-Early development.
+* PySide6
+* psutil
