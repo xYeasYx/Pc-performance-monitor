@@ -4,6 +4,17 @@ A lightweight Windows desktop application for monitoring real-time system perfor
 
 The application is built with Python and PySide6 and currently tracks CPU usage, RAM usage, and network activity while providing a draggable, transparent overlay that can stay visible above other applications.
 
+## Screenshots
+
+### Dashboard
+
+![PC Performance Monitor Dashboard](screenshots/dashboard.png)
+
+### Performance Overlay
+
+![PC Performance Monitor Overlay](screenshots/in game.png)
+
+
 ## Features
 
 * Real-time CPU usage monitoring
@@ -21,6 +32,29 @@ The application is built with Python and PySide6 and currently tracks CPU usage,
 * Saved overlay position
 * Saved opacity settings
 * Global `Ctrl + Shift + O` hotkey to show or hide the overlay
+
+## Overlay Compatibility
+
+The performance overlay is designed to display system metrics over normal desktop applications and games running in **Windowed** or **Borderless Windowed** mode.
+
+### Currently Supported
+
+* Standard desktop applications
+* Windowed games
+* Borderless windowed games
+* Always-on-top overlay display
+* Click-through Game Mode
+
+### Exclusive Fullscreen
+
+The overlay may not appear over games running in **Exclusive Fullscreen** mode.
+
+The current overlay is implemented as a lightweight Windows/Qt always-on-top window. Exclusive fullscreen applications can bypass normal desktop window composition, preventing standard overlay windows from being displayed above the game.
+
+For the best experience, use **Borderless Windowed** mode when available.
+
+Native exclusive-fullscreen overlay support is being considered for a future version.
+
 
 ## Overlay Modes
 
