@@ -1,13 +1,39 @@
+import ctypes
+import os
 import sys
 
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication
+
 
 from gui import DashboardWindow
 from monitor import SystemMonitor
 
 
+
+def resource_path(relative_path: str) -> str:
+    """Return the correct path for normal Python or a PyInstaller bundle."""
+
+    if hasattr(sys, "_MEIPASS"):
+        base_path = sys._MEIPASS
+    else:
+        base_path = os.path.dirname(os.path.abspath(__file__))
+
+    return os.path.join(base_path, relative_path)
+
+
 def main() -> int:
+
+    app_id = "PCPerformanceMonitor.1"
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(app_id)
+    
     application = QApplication(sys.argv)
+
+    icon_path = resource_path(
+        os.path.join("assets", "icon.ico")
+    )
+
+    application.setWindowIcon(QIcon(icon_path))
     application.setStyleSheet(
         """
         QMainWindow, QWidget {
