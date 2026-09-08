@@ -12,7 +12,7 @@ The application is built with Python and PySide6 and currently tracks CPU usage,
 
 ### Performance Overlay
 
-![PC Performance Monitor Overlay](screenshots/in game.png)
+![PC Performance Monitor Overlay](screenshots/ingame.png)
 
 
 ## Features
